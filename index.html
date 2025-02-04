@@ -1,50 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> My Experiment</title>
-
-        <script src="https://unpkg.com/jspsych@7.3.4"></script>
-        <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
-        <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe@0.4"></script>
-        <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css"
-        rel="stylesheet" type="text/css" />
-
+    <title>My Experiment</title>
+    <script src="https://unpkg.com/jspsych@7.3.4"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe@0.4"></script>
+    <link href="https://unpkg.com/jspsych@7.3.4/css/jspsych.css"
+    rel="stylesheet" type="text/css" />
     </head>
-
-
-
-
-    <body>
-
-    </body>
-
-
+    <body></body>
     <script>
-        const jsPsych = initJsPsych();
-
-        const dummy_trial = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: 'This text is example data we want to save.<br>Press any key
-            to try to save it to OSF.'
-        };
+            const jsPsych = initJsPsych();
+            const dummy_trial = {
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: 'This text is example data we want to save.<br>Press any key
+                to try to save it to OSF.'
+            };
+            const save_data_trial = {
+                type: jsPsychPipe,
+                action: "save",
+                experiment_id: "tL5YfZftnlLa", // REPLACE WITH YOUR ID!
+                filename: "test_data.csv",
+                data_string: ()=>jsPsych.data.get().csv(),
+                on_finish: function(data){alert(data.result.message)}
+            };
+            
+            const end_trial = {
+                type: jsPsychHtmlKeyboardResponse,
+                stimulus: 'Nothing left to do here.'
+            };
         
-        const save_data_trial = {
-            type: jsPsychPipe,
-            action: "save",
-            experiment_id: "tL5YfZftnlLa", // REPLACE WITH YOUR ID!
-            filename: "test_data.csv",
-            data_string: ()=>jsPsych.data.get().csv(),
-            on_finish: function(data){alert(data.result.message)}
-        };
-        const end_trial = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: 'Nothing left to do here.'
-        };
-        
-        jsPsych.run([dummy_trial, save_data_trial, end_trial]);
-
-
-
-    </script>
-
+            jsPsych.run([dummy_trial, save_data_trial, end_trial]);
+</script>
 </html>
